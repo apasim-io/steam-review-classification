@@ -24,11 +24,28 @@ class SentimentExample:
 # Reads sentiment examples in the format [0 or 1]<TAB>[raw sentence]; tokenizes and cleans the sentences.
 def read_sentiment_examples(df):
     """
-    Takes a DataFrame and returns a list of (review, voted_up) tuples.
+    Takes a DataFrame and returns a list of (words, voted_up) tuples.
+    Tokenizes and lowercases the review text.
     Assumes DataFrame has columns 'review' and 'voted_up'.
     """
-    return list(zip(df['review'], df['voted_up']))
+    examples = []
+    for review, voted_up in zip(df['review'], df['voted_up']):
+        # Basic preprocessing: lowercase and split on whitespace
+        words = str(review).lower().split()
+        examples.append((words, bool(voted_up)))
+    return examples
 
-testData = pd.read_excel('steam-review-classification/all_steam_game_reviews_english.xlsx')
+testData = pd.read_excel('all_steam_game_reviews_english.xlsx')
 
-print(read_sentiment_examples(testData))
+trainEx = read_sentiment_examples(testData)
+
+n_pos = 0
+n_neg = 0
+for ex in trainEx:
+    if ex[1] == True:
+        n_pos += 1
+    else:
+        n_neg += 1
+        
+print(f"Number of positive reviews: {n_pos}")
+print(f"Number of negative reviews: {n_neg}")
