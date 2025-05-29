@@ -2,8 +2,6 @@ import steamreviews
 import pandas as pd
 import time
 
-# List of App IDs for the games you're interested in
-# Example: [CS2, Dota 2, Team Fortress 2]
 '''
 Games searched: 
 - Nine Sols, Star Wars Jedi: Survivor, Elden Ring, Dark Souls: Prepare to Die Edition,
@@ -61,7 +59,6 @@ for app_id in APP_IDS:
     except Exception as e:
         print(f"An error occurred while processing App ID {app_id}: {e}")
     
-    # Optional: Add a small delay between processing different App IDs to be respectful to the API
     if len(APP_IDS) > 1 and app_id != APP_IDS[-1]: # if not the last app_id
         time.sleep(5) # 5-second delay
 
